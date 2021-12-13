@@ -1,0 +1,62 @@
+~ cho bt thư mục đang làm vc là thư mục người dùng
+cd [lệnh]:chuyển thư mục.
+cd ..: đi ra 1
+cd /: đi ra root
+$ ls : liệt kê các thư mục trong thư mục người dùng
+$ ls -l: liệt kê các thư mục chi tiết
+$ ls -la: liệt kê các thư mục ẩn
+-> nếu k có tham số thì mặc định là lấy của thư mục người dùng. còn truyền vào tham số thì sẽ 
+vào tham số đó và list.
+$ man command: tra cứu cú pháp, chức năng của lệnh.
+cd: thay đổi thư mục hiện hành.
+pwd: hiển thị thư mục hiện hành.
+passwd: thay đổi mk đn.
+=============================Câu lệnh Alias
+$ alias xemthumuc='ls -l'
+=============================Tạo thư mục mkdir
+$ mkdir dir1
+$ mkdir -p dir3/dir4
+=========Xóa thư mục rỗng rmdir
+$ rmdir dir1: xóa thư mục dir1 trong thư mục hiện hành nếu dir1 rỗng
+$ rmdir dir1 dir2: xóa thư mục dir1,2 trong thư mục hiện hành nếu rỗng
+$ rmdir -p a/b/c: xóa hết các thư mục a,b,c nếu rỗng
+============================Tạo tệp tin touch, cat
+$ touch hello.txt: tạo tệp hello rỗng
+cat: soạn thảo trên terminal 
+cat >hello.txt: ghi đè
+cat >>hello.txt: ghi nối
+cat hello.txt: hiển thị nội dung
+trình soạn thảo nano: $ nano tên tệp
+============================xóa tập tin
+$ rm -rf dir2 : xóa tập tin dir2 trong thư mục hiện hành và các nội dung của nó nếu thư mục dir2 này tồn tại
+rmdir là xóa thư mục rỗng và rm là xóa thư mục và tập tin.
+============================copy tập tin 
+$ cp file5 file6: copy file5 thành file 6.
+$ cp file5 /tmp: copy file5 trong thư mục hiện hành sang thư mục /tmp.
+$ cp -r dir1 dir5: copy nguyên thư mục và tất cả nội dung, tm con bên trong sang dir5, nếu có thì vào dir5
+nếu k có thì copy xong đổi tên thành dir5.
+============================di chuyển tập tin
+mv file5 file6: đổi tên
+mv file6 /tmp: di chuyển vào /tmp
+mv dir1 dir2: nếu có dir2 thì đưa dir1 vào dir2, nếu k đổi tên dir1 thành dir2
+=============================tạo liên kết 
+ln -s (thư mục liên kết) (trong thư mục này)
+ls -i :liệt kê các thư mục hiện hành và inode của nó
+================================Lập trình shell
+biến hệ thống $USER: in ra tên của người dùng ht.
+biến hệ thống $HOME: in ra thư mục của người dùng ht.
+biến hệ thống $PWD: in ra thư mục đang làm việc của người dùng ht.
+biến hệ thống $PATH: in ra đường dẫn của tập tin mình đang thực thi.
+lịch tháng : cal
+ngày hiện tại: date.
+read [biến]: nhập vào biên.
+=======================================
+đọc hệ thống Bios ktra ht phần cứng nếu pass thì tìm kiếm khởi chạy hđh đc chỉ ra trong Bios
+sau đó đọc MBR 
+các service ở tg boot tương ứng vs mức chạy 5 là dịch vụ nào
+service --status-all :liệt kê tất cả service đag chạy
+service cron start : c1
+init.d/cron stop: c2
+================================
+adduser user group : thêm user vào gr
+deluser user gt: xóa u ra khỏi gr

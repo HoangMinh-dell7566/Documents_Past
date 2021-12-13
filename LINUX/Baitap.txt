@@ -1,0 +1,28 @@
+bt1/
+nano user.sh
+echo "ten nguoi dung : $USER"
+echo "thu muc nguoi dung: " $HOME
+echo " thu muc dang lam viec: $PWD"
+echo "duong dan cac tap tin thuc thi: $PATH "
+bt2/
+nana ...
+echo "nhap a: "
+read a
+echo "nhap b: "
+read b
+let tong = a + b
+let hieu = a - b
+let nhan = a * b
+let chia = a / b
+let du = a % b
+echo " $tong $hieu $nhan $chia $du"
+bt3/
+nano ..
+echo "ban ten gi?"
+read name
+echo " chao $name!"
+echo" thu muc nguoi dung : $HOME"
+echo "thu muc dang lam viec la: $PWD"
+bt4/ 
+ln -s $PWD/path ~/Desktop
+

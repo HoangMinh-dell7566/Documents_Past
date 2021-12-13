@@ -1,0 +1,67 @@
+Lượng hàng trong kho hàng ngày đã dùng.
+các lỗi trong HT:
+-Luồng: +đầu vào # đầu ra.
++ các đối tượng luôn có 1 tên duy nhất.
++ 1 luồng dl chỉ có 1 hướng luồng giữa các kh,
++ 1 ký hiệu ngã ba phải cùng dl đến các tiến trình khác.
+	
+-Tiến trình: +k có tt chỉ có các luồng đi ra hoặc chỉ có các luồng đi vào (hố đen).
++đặt tên là 1 nhãn cùm động từ + bổ nghĩa.
+-Kho: k có luồng di chuyển từ kho 1 đến kho 2.
++ khi có dl vào kho thì phải có dl từ kho ra.
++ khi có dl ra từ kho thì dl đó phải đc cung cấp từ 1 tt.
++ k đc di chuyển từ nguồn đích đến kho dl, và ngược lại.
+-Nguồn đích: dl k thể di chuyển từ nguồn này đến nguồn khác.
+ ============================================
+tác nhân = source/sink chức năng trái <> nhóm người dùng phải vd: 2
+use case : 1 chức năng cs thể cs nh user, 1 user thực hiện nh chức năng
+tác nhân - ca sử dụng : qhe kết nối: tùy tài liệu có đường thẳng có mũi tên.
+các ca : mũi tên
+mở rộng: Xử lý A gọi đến B trong 1 số đ k nhất định
+bao gồm: nếu xử lý A có gọi B ít 1 lần
+========================================
+KH tìm danh mục sp trên webstores
+=============================
+nếu mà cùng 2 khóa thì 1 mã phiếu 2 cửa hàng
+-============================
+dạng chuẩn 1: 
+mỗi tt là nguyên tố, phải là đơn trị, k có tt được suy ra từ các tt khác
+=> loại bỏ tt đa trị, tt đc suy dẫn, tách tt ra vs tt phức hợp. khi tách bảng thì khóa
+sẽ vừa của khóa chính có khóa của nhóm lặp
+dạng chuẩn 2: 
+đạt dạng chuẩn 1, khóa chính chỉ có 1 tt, k có tt k phải khóa chính tồn tại k quan hệ,
+các tt k khóa phụ thuộc đầy đủ vào khóa
+=> tách các tt phụ thuộc vào 1 phần của khóa.
+dạng chuẩn 3: 
+đạt dạng chuẩn 2, mọi tt k khóa k phụ thuộc bắc cầu vào khóa.
+=> loại bỏ tt phụ thuộc bắc cầu, tách thành 1 quan hệ có khóa chính là tt phụ thuộc.
+bắt buộc:
+Bậc 1:
+	-1:1=>giữ nguyên quan hệ và thêm 1 bản sao KC làm KN
+	-1:N=>lấy bản sao KC của qhe làm KN (nhân viên-giám sát)
+	-N:N=>tạo 1 quan hệ ms KC là tập hợp 2 giá trị của tt KC của 2 qhe. và tt của qhe ms.
+Bậc 2:
+	-1:1=>KC của qhe bất kỳ đưa vào qhe còn lại làm KN
+	-1:N=>thêm KC của bên 1 thành KN bên N.
+	-N:N=>tạo 1 quan hệ ms KC là KC của 2 tập thực thể và các tt của quan hệ ms.
+	nếu trùng thì chọn 1 tt cua quan hệ ms làm kc.
+Bậc 3:
+	-1:1
+	-1:N
+	-N:N => tách thành 1 quan hệ ms, KC là 3 KC của 3 tập thực thể của mqh.
+tùy chọn: 0
+Bậc 1:
+	-1:1=>2 bên: tạo quan hệ ms vs 2 bản sao của KC.
+	-1:N=>lấy bản sao KC của qhe làm KN (nhân viên-giám sát)
+	-N:N=>tạo 1 quan hệ ms KC là tập hợp 2 giá trị của tt KC của 2 qhe. và tt của qhe ms.
+Bậc 2:
+	-1:1=>KC của qhe bất kỳ đưa vào qhe còn lại làm KN
+	-1:0,N=>qhe ms chua KC của cả 2, KC của nhiều thành KC, KC bên ít thành KN của qhe ms.
+		bth lấy KC bên N đưa sang bên 1. 
+	-N:N=>tạo 1 quan hệ ms KC là KC của 2 tập thực thể và các tt của quan hệ ms.
+	nếu trùng thì chọn 1 tt cua quan hệ ms làm kc.
+Bậc 3:
+	-1:1
+	-1:N
+	-N:N => tách thành 1 quan hệ ms, KC là 3 KC của 3 tập thực thể của mqh
+quan hệ => mối qh(2tt)

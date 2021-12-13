@@ -1,0 +1,8 @@
+1.chuyển đơn đặt hàng theo định dạng nhà bếp
+tạo hóa đơn khách hàng
+phát sinh dự gia tăng hàng hóa đã bán
+phát sinh vc giảm lượng kho hàng.
+2. sơ đồ tạo báo cáo quản lý
+truy cập dữ liệu hàng hóa đã bán và kho hàng.
+tổng hợp dl hh đã bán và kho hàng.
+chuẩn bị báo cáo hóa đơn.

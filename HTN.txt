@@ -1,0 +1,33 @@
+Tín hiệu tương tự: là tín hiệu thu đc từ môi trường thực tế và đc biểu diễn bằng biểu đồ hình Sin,
+đo đc trong bất kỳ thời điểm nào cũng đều có giá trị tương ứng.
+Tín hiệu số: là tín hiệu mà máy tính có thể hiểu đc.
+có 2 loại hệ thống nhúng:
+-yêu cầu về hiệu năng và chức năng:đáp ứng th/gian thực, hoạt động độc lập, kêt nối mạng, di động
+-hiệu năng của vi điều khiển: tích hợp cỡ nhỏ, vừa, phức tạp.
+-Khi tạo mới :
+git init: khởi tạo local repo
+git remote add origin "link remote repo
+git add .
+git commit -m ""
+git push -u origin --all
+============================================
+tạo branch mới:
+git init
+git remote add origin
+git add .
+git commit -m ""
+git branch ...
+git branch : hiện các branch
+git checkout ...:chuyển branch
+git push origin [branch mới]
+============================================
+vào git bash here ở trong program
+đầu tiên phải pull về git pull
+git add .
+git commit
+git push
+viết lại IC L293D, đk động cơ 1 chiều chân PWM, cầu chữ H, làm tn để dk tốc độ, hướng
+RISING: bấm 1 lần.
+low: 
+high: bấm giữ.
+falling: thả ra

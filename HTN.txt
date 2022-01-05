@@ -9,7 +9,10 @@ git init: khởi tạo local repo
 git remote add origin "link remote repo
 git add .
 git commit -m ""
-git push -u origin --all
+git push -u origin main
+nếu lỗi fatal: 
+git remote rm origin: xóa origin cài lại
+git remote add origin "link remote repo"
 ============================================
 tạo branch mới:
 git init

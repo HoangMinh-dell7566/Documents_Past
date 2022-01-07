@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="traversalInorder()">InOrder</button>
+    <button onclick="traversalPreorder()">Preorder</button>
+    <button onclick="traversalPostoder()">Postoder</button>
+    <input id="input" value="" />
+    <button onclick="insertNode()">ADD</button>
+    <svg id="myCanvas" width="1200" height="300" margin="200" >
+        <g>
+            <path id='p0' d="M500,50L258,100" stroke="#333333" stroke-width="3"/>
+            <path id='p1' d="M500,50L742,100" stroke="#333333" stroke-width="3"/>
+            <path id='p2' d="M272,106L364,143" stroke="#333333" stroke-width="3"/>
+            <path id='p3' d="M727,106L635,143" stroke="#333333" stroke-width="3"/>
+            <path id='p4' d="M756,106L848,143" stroke="#333333" stroke-width="3"/>
+            <path id='p5' d="M258,100L137,150" stroke="#333333" stroke-width="3"/>
+        </g>
+        <g>
+            <circle id='v0' cx="500" cy="50" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v1' cx="258" cy="100" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v2' cx="742" cy="100" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v3' cx="379" cy="150" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v4' cx="621" cy="150" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v5' cx="863" cy="150" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+            <circle id='v6' cx="137" cy="150" r='16' stroke="#333333" stroke-width="3" fill="#fff" />
+        </g>
+        <g>
+            <text id='t0' x='500' y='55' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>41</text>
+            <text id='t1' x='258' y='105' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>20</text>
+            <text id='t2' x='742' y='105' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>65</text>
+            <text id='t3' x='379' y='155' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>34</text>
+            <text id='t4' x='621' y='155' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>50</text>
+            <text id='t5' x='863' y='155' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>68</text>
+            <text id='t6' x='137' y='155' fill='#333' font-size="16" font-weight='bold' text-anchor='middle'>10</text>
+        </g>
+    </svg>
+    <h1 id='heading1'></h1>
+    <h1 id='heading2'></h1>
+    <h1 id='heading3'></h1>
+    <script src="./main.js"></script>
+</body>
+</html>

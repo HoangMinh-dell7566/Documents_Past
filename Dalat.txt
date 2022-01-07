@@ -1,0 +1,5 @@
+MSSV Ten CTDL CSDL 
+A1 Nguyet 5.6 7.5
+A2 Lan 7.5 6.7
+B1 Truong 6.5 4.5
+B2 Thanh 7.2 6.7

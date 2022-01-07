@@ -1,0 +1,29 @@
+C6:
+1. Các hiện tượng khi thực hiện trong cùng 1 điều kiện cho kết quả luôn như nhau: tất nhiên.
+Các hiện tượng khi thực hiện trong cùng 1 điều kiện cho kết quả luôn khác nhau: ngẫu nhiên.
+2. phép thử: 1 quan sát hiện tượng ngẫu nhiên => phép thử
+3. biến cố là kq của phép thử.
+4.biến cố sơ cấp: là biến cố k thể phân thành tổng của 2 bc.
+- tổng của 2 biến cố: C. biến cố C xảy ra khi hoặc A xảy ra, hoặc B xảy ra.
+vd: B2 = A1 hợp A2 = A1 + A2
+	B1 = A1 giao A2 = A1.A2
+5. Biến cố chắc chắn xảy ra: Biến cố chắc chắn.
+-biến cố kbh xảy ra => biến cố rỗng.
+6. Biến ngẫu nhiên:
+gọi omega: là tập hợp/không gian all các biến cố sơ cấp. 1 biến ngẫu nhiên x xác định trên omega là 1 ánh xạ:
+=> Biến ngẫu nhiên là 1 biến thực, mỗi gtri của nó là mã hóa của 1 biến cố sơ cấp.
+========================================================
+1.Phân Phối xác suất: 
+Hệ thức thể hiện mqh giữa biến ngẫu nhiên và xác suất tương ứng.
+Chú ý: biến ngẫu nhiên phân thành 2 loại (dựa vào miền trị của biến ngẫu nhiên): 
+-Biến ngẫu nhiên rời rạc: miền trị là tập rời rạc.(toán rời rạc xử lý các tập rời rạc-là tập hữu hạn hoặc vô hạn đếm đc. hữu hạn là tập có số lượng ptu < vô cùng. Vô hạn đếm đc là tập nếu tồn tại 1 đơn ánh từ tập hợp đó vào tập hợp số tự nhien N.
+-Biến ngẫu nhiên liên tục: miền trị là tập vô hạn k đếm đc.
+a. phân phối xác suất của biến ngẫu nhiên rời rạc:
+Hàm mật độ xác suất: ví dụ: (gieo đồng xu) f(x)= 0.5,x=0,1;0,x#0,1.
+tính chất toán học: 
+b. Biến ngẫu nhiên liên tục:(k có bảng ppxs, chỉ có bảng mật độ xs)
+
+2. hàm PPXS :
+========================================================
+các đặc trưng của biến ngẫu nhiên: 
+a.Kỳ vọng của biến ngẫu nhiên x: 

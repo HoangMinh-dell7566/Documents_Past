@@ -1,0 +1,656 @@
+để thêm dấu " vào chuỗi ta dùng \" TKMT \", sau đó cat() để xóa dấu \
+vd b<-"Hom nay hoc \" TKMT \""
+b = "Hom nay hoc \" TKMT \""
+cat(b)
+Hom nay hoc " TKMT "
+
+========================================================================VECTOR
+a<-c(8,2,6,1,6,4,2,5,9)
+a = 8 2 6 1 6 4 2 5 9 => a[5] = 6, a[1] = 8 mode(a) = "numeric" length(a) = 9
+các thành phần của vector phải có cùng kiêu dữ liệu nếu k sẽ cùng đổ về 1 kiểu
+ z<-c(4,1,"hoc","Nha trang" ,"Dai",5)
+> z
+[1] "4"         "1"         "hoc"       "Nha trang" "Dai"       "5"        
+> mode(z)
+[1] "character"
+> x<-c(cot1=5, cot2=8, cot3=9)
+> x
+cot1 cot2 cot3 
+   5    8    9 
+> x["cot2"]
+cot2 
+   8 
+=================================================MIỀN GIÁ TRỊ
+> a<-5:12
+> a
+[1]  5  6  7  8  9 10 11 12
+> b<-seq(5,12)
+> b
+[1]  5  6  7  8  9 10 11 12
+> x<-seq(5,12,3)
+> x
+[1]  5  8 11
+==================================================LẶP
+> x<-rep(c(5,7,8,6),c(2,4,1,3))
+> x
+ [1] 5 5 7 7 7 7 8 6 6 6
+
+===========================================Ma trận
+> a<-matrix(c(12,23,45,54,31,25,65,78,71,32),nrow=2,ncol=5,byrow=TRUE)
+> a
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   12   23   45   54   31
+[2,]   25   65   78   71   32
+> b<-matrix(c(12,23,45,54,31,25,65,78,71,32),nrow=2,ncol=5,byrow=FALSE)
+> b
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   12   45   31   65   71
+[2,]   23   54   25   78   32
+byrow = true thì tạo hàng trước xong đến cột, ngược lại false thì tạo cột trước xong đến hàng
+
+> a<-c(56,32,12,78)
+> b<-c(45,32,12,55)
+> c<-c(11,32,56,87)
+> ma<-rbind(a,b,c) => tạo ma trận theo hàng
+> ma
+  [,1] [,2] [,3] [,4]
+a   56   32   12   78
+b   45   32   12   55
+c   11   32   56   87
+> mb<-cbind(a,b,c)	=> tạo ma trận theo cột
+> mb
+      a  b  c
+[1,] 56 45 11
+[2,] 32 32 32
+[3,] 12 12 56
+[4,] 78 55 87
+======================================Chuyển vector thành ma trận
+> a<-c(10,23,21,45,67,87,54,32,21,66,34,21)
+> a
+ [1] 10 23 21 45 67 87 54 32 21 66 34 21
+> length(a)
+[1] 12
+> dim(a)<-c(3,4) => chuyển a về thành matran vs 3 hnag 4 cot
+> a
+     [,1] [,2] [,3] [,4]
+[1,]   10   45   54   66
+[2,]   23   67   32   34
+[3,]   21   87   21   21
+
+> M<-matrix(a,3,4,byrow=T, dimnames=list(c("h1","h2","h3"),c("c1","c2","c3","c4")))
+> M
+   c1 c2 c3 c4
+h1 10 23 21 45
+h2 67 87 54 32
+h3 21 66 34 21
+=========================================Ma tran don vi
+> A<-matrix(0,4,4)
+> A
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+> diag(A)<-1
+> A
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    1    0
+[4,]    0    0    0    1
+
+==============================các phép toán trên ma trận => mún +- 2mt thì 2 mt đó phải có cùng kích thước
+> A
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   45   32   11   44   46
+[2,]   79   65   42   21   23
+> B
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   12   45   31   65   71
+[2,]   23   54   25   78   32
+> C<-A+B
+> C
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   57   77   42  109  117
+[2,]  102  119   67   99   55
+> D<-A-B
+> D
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   33  -13  -20  -21  -25
+[2,]   56   11   17  -57   -9
+
+=================================Phép nhân
+> KQ<-A%*%B
+> KQ
+     [,1]  [,2] [,3]
+[1,] 5732  8283 9283
+[2,] 6418 10164 9562
+=================================Ma trận chuyển vị
+> CT<-t(KQ)
+> CT
+     [,1]  [,2]
+[1,] 5732  6418
+[2,] 8283 10164
+[3,] 9283  9562
+================================Ma trận nghịch đảo và định thức của Ma trận
+> S
+     [,1] [,2] [,3]
+[1,]    4    7    9
+[2,]    2    4    5
+[3,]    1    6    3
+> NS<-solve(S)
+> NS
+           [,1]       [,2]       [,3]
+[1,]  2.5714286 -4.7142857  0.1428571
+[2,]  0.1428571 -0.4285714  0.2857143
+[3,] -1.1428571  2.4285714 -0.2857143
+> 
+định thức của ma trận
+> dt<-det(S)
+> dt
+[1] -7
+truy xuat hang va cot
+> S[2,]
+[1] 2 4 5
+> S[,3]
+[1] 9 5 3
+
+================================SẮP XẾP
+> #factor
+> x<-c(7,2,5,9,1)
+> factor(x)
+[1] 7 2 5 9 1
+Levels: 1 2 5 7 9
+
+==================================DANH SÁCH
+ > x<-list(c(5,6,1),"DH Nha Trang",8)
+> x
+thành phần 1
+[[1]]
+[1] 5 6 1
+thành phần 2
+[[2]]
+[1] "DH Nha Trang"
+thành phần 3
+[[3]]
+[1] 8
+====================================BẢNG DỮ LIỆU
+> #Data frame
+> #Data frame ~ Bang du lieu ~ quan he
+> x<-c(56,23,45,89)
+> z<-c(67,43,12,77)
+> y<-c(78,54,55,21)
+> BA1<-data.frame(x,y,z)
+> BA1
+   x  y  z
+1 56 78 67
+2 23 54 43
+3 45 55 12
+4 89 21 77
+
+
+> BA2<- edit(data.frame())
+> BA2
+   ten CTDL TKMT CSDL
+1  An   7.8  8.2  7.3
+2 Chau  8.1  8.5  7.8
+3 Binh  7.5  7.3  7.6
+4  Lan  8.2  6.3  8.5
+====================================sửa dataframe
+ BA2<- edit(data.frame(BA2))
+> BA2
+     ID CTDL TKMT CSDL
+1   An   7.8  8.2  7.3
+2 Chau   8.1  8.5  7.8
+3  Binh  7.5  7.3  7.6
+4   Lan  8.2  6.5  6.5
+======================================TRUY XUẤT BẢNG
+> BA2[2,1]
+[1] "Chau "
+
+>BA2$ID
+[1] Binh Chau Lan Anh
+
+> BA3
+    ID KTLT HDH
+1 Binh  7.4 7.5
+2 Chau  8.1 8.2
+3  Lan  6.5 7.1
+4   An  6.8 6.5
+==========================================LỌC BẢNG
+theo hàng: > BK<-subset(BA3,KTLT>=7.0)
+> BK
+    ID KTLT HDH
+1 Binh  7.4 7.5
+2 Chau  8.1 8.2
+theo cột: 
+B1<-data.frame(BK$ID,BK$KTLT)
+
+> > KQ<-merge(BA2,BA3,by="ID",all=TRUE)
+> KQ
+     ID CTDL TKMT CSDL KTLT HDH
+1    An   NA   NA   NA  6.8 6.5
+2   An   7.8  8.2  7.3   NA  NA
+3  Binh  7.5  7.3  7.6  7.4 7.5
+4  Chau   NA   NA   NA  8.1 8.2
+5 Chau   8.1  8.5  7.8   NA  NA
+6   Lan  8.2  6.5  6.5  6.5 7.1
+=============================================GỘP BẢNG
+> >  KQ<-merge(BA2,BA3,by="ID",all=FALSE)
+> KQ
+    ID CTDL TKMT CSDL KTLT HDH
+1 Binh  7.5  7.3  7.6  7.4 7.5
+2  Lan  8.2  6.5  6.5  6.5 7.1
+=============================================cập nhật thêm 1 hàng,cột
+bổ sung trực tiếp bằng câu lệnh
+B2$D3<-c(6.7,8.1,5.4,7.2)->cột
+r1<-c(67,"Binh",5.6,7.3,6.3)
+B2<-rbind(B2,r1)->hàng
+
+=============================================xem tổng kết về mặt thống kê của các cột trong bảng
+summary(B2)
+
+============================================so sánh 2 biểu thức
+> all.equal(x,y)
+[1] TRUE
+
+> x==y
+[1] FALSE
+> as.numeric(x==y)
+[1] 0
+
+> x<-"12"
+> y<as.numeric(x)
+[1] TRUE
+> y<-as.numeric(x)
+> y
+[1] 12
+
+===================================================CÂU LỆNH IF ELSE
+>  x<-30
+> if(is.integer(x)){
++ print(" x la so nguyen")
++ }
+> x<-30L
+>  if(is.integer(x)){
++ + print(" x la so nguyen")
++ }
+[1] " x la so nguyen"
+> x<-c("Dai","Hoc","Nha","Trang")
+> x
+[1] "Dai"   "Hoc"   "Nha"   "Trang"
+> if("trang" %in% x) { print("co xuat hien")} else 
++ { print("Khong xuat hien") }
+[1] "Khong xuat hien"
+> 
+===========================================================CÂU LỆNH SWITCH
+> x<-1
+> y<-3
+> switch(x+y,"mot","hai","ba","bon","nam")
+[1] "bon"
+giá trị thực hiện đc bn thì thực hiện câu lệnh thứ đó
+> switch(3,A=1,A=5,A=7,A=2,A=8)
+[1] 7
+> 
+
+==================================================CÂU LỆNH REPEAT 
+> x=0
+> repeat {
++ print ("HELLO")
++ x<-x+1
++ if(x>=10) {break}
++ }
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+
+> s=0
+> i=1
+> repeat { 
++ s=s+i
++ if( i==100) {
++ print(s)
++ break}
++ i=i+1}
+[1] 5050
+> 
+
+> s<-0
+> i<-1
+> while(i<=100) {
++ s=s+i
++ i=i+1
++ }
+> print(s)
+[1] 5050
+> 
+
+> i=1
+> while(i<=10)
++ { print("HELLO")
++ i=i+1}
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+================================câu lệnh for
+> #for (bien in vector){ lenh }
+>  #for (bien in grtidau:gtricuoi ){ lenh }
+> for(i in 1:10) {
++ print("HELLO") }
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+[1] "HELLO"
+ s=0
+> for(i in 1:100) { s=s+i }
+> print(s)
+[1] 5050
+===================================đọc file
+ungthu<-read.table("tên file",header=T,sep",")->sep là tách các dấu phấy thành các khoảng trắng
+3 kiểu dữ liệu rời rạc gồm 3 kiểu định danh, nhị phân, thứ tự.
+kiểu dữ liệu rời rạc là miền trị của nó là hữu hạn < vô cùng, hoặc vô hạn đếm đc tồn tại 1 song ánh từ N vào 
+tập hợp đó.
+kiểu dữ liệu liên tục là kiểu mà miền trị của nó có vô hạn mà k đếm đc gồm kiểu số nguyên,
+thống kê gồm tk mô tả, tk suy luận
+-mô tả dùng hình ảnh để đưa ra tính chất
+-suy luận dựa vào cơ sở toán học => tính chất
+===================================biểu đồ nhánh lá stem
+>  X<-c(34,31,28,17,18,19,17,19,25,22,21,20,26,28,31,32,31,35)
+> stem(X,0.5)
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 77899
+  2 | 0125688
+  3 | 111245
+> stem(X,1)
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 77899
+  2 | 012
+  2 | 5688
+  3 | 11124
+  3 | 5
+===========================================vẽ biểu đồ 
+> #hist()
+>  X<-c(34,31,28,17,18,19,17,19,25,22,21,20,26,28,31,32,31,35)
+> hist(X)
+> y<-c (12,15,28,25,24,23,45,50,37)
+> hist(y)
+> > hist(y, col='yellow')=> thay màu
+> hist(y, col='yellow',border='blue')
+> hist(y, col=rainbow(4))
+> hist(y, col=heat.colors(4))
+> hist(y, col=heat.colors(4), main='bieu do tan so') => them Tên tiêu đề
+> hist(y, col=heat.colors(4), main='bieu do tan so',xlab='Tuoi',ylab='Tan so')
+ hist(y, col=heat.colors(4), main='bieu do tan so',xlab='Tuoi',ylab='Tan so',xlim=c(20,40))
+=>giới hạn x
+==============================================>Biêu đồ Thanh bar chart
+z<-c(34,54,23,67,31,82)
+> barplot(z)
+> barplot(z, col=rainbow(length(z)),names.arg=thang,xlab='Thang',ylab='Doanh thu',main='Doanh thu')
+> barplot(dt)
+> mau<-c('red','green','blue','yellow')
+> barplot(dt,col=mau)
+> mau<-c('thistle','skyblue1','tomato3','violetred4')
+> barplot(dt,col=mau)
+> colors()
+>legend('topleft',c('XYZ','ABC','MNL','OPQ'),fill=mau) => hiện ghi chú
+> barplot(z, col=rainbow(length(z)))
+===========================================biểu đồ pareto
+> tsp<-c('A','B','C','D','E')
+> ssp<-c(7,22,11,37,3)
+> dl<-data.frame(tsp,ssp)
+> dl
+  tsp ssp
+1   A   7
+2   B  22
+3   C  11
+4   D  37
+5   E   3
+> pareto.chart(dl$ssp)
+==============================================Biểu đồ tròn
+> x<-c(32,25,7,17)
+> pie(x)
+> pie(x,col=c('red','blue','yellow','violet'))
+> mau<-rainbow(length(x))
+> pie(x,col=mau)
+> tp<-c('Nha Trang','Hue','Bac Giang','Tuy Hoa')
+> pie(x,col=mau,labels=tp)
+> pt<-round(x*100/sum(x),1) => tính phần trăm
+> pie(x,col=mau,labels=pt)
+kh_pt<-c(paste(pt,'%',sep=' '))=> kí hiệu phần trăm
+ pie3D(x)
+> pie3D(x,col=mau)
+> pie3D(x,col=mau,explode=0.2)=>vẽ 3D
+> boxplot(x)=> Biểu đồ dạng hộp => tứ phân vị
+> boxplot(x,col='yellow')
+> boxplot(x,col='yellow',main='Bieu do tu phan vi')
+> boxplot(x,col='yellow',main='Bieu do tu phan vi',ylab='Tuoi',horizontal=T)
+> pie(x,col=rainbow(5),labels=nhan)
+> legend("topright",ten,fill=rainbow(5),cex=0.7,ncol=2)
+===============================================Biểu đồ đường
+ plot(x,type='p'):vẽ điểm
+> plot(x,type='l'): vẽ đường
+> plot(x,type='h'): vẽ mỗi điểm là 1 đường thẳng đưng
+> plot(x,type='o'): vẽ các đường đi ngang qua điểm
+> plot(x,type='b'): vẽ các đường k cắt các điểm
+> plot(x,type='s'): vẽ các đường theo cấp bậc
+=========vẽ 2 đường trên 1 đồ thị
+> x<-c(56,78,32,12,58,59,98,84,73,28,22,47,51,63,77,71)
+> y<-c(67,43,56,12,45,23,98,76,19,28,58,67)
+> plot(x,type='o',lty=1,col='blue',main='Bieu do duong')
+> lines(y,type='l',lty=2,col='red')
+> z<-c(56,78,43,41,23,45,49,98,99,56,48,32,19,18)
+> lines(z,type='h',lty=6,col='green')
+vẽ đồ thị y=x^2
+tìm hiểu stem,các biến của hist, tìm hiểu kích cỡ kích thước của legend=cex(), tìm thamm số mở rộng hay thu hẹp ghi chú
+tìm hiểu các tham số của biểu đồ boxplot=>theme (legend.title = element_text (size = 2)
+================================================Biểu đồ điểm
+> BA<-edit(data.frame())
+> BA
+     Ten  SL
+1    Hue  25
+2 SaiGon 750
+3  Hanoi 623
+4 Danang 493
+5  Phyen 524
+> dotchart(BA$SL,labels=BA$Ten,pch=c(12,15,11,9,13),col=rainbow(5))
+================================================Biểu đồ tán xạ
+> x<-c(12,20,45,10,30)
+> y<-c(45,17,78,39,6)
+> plot(x,y)
+> plot(x,y,type='o',lty=2,col='red',pch=14)
+================================================y=x^2
+> x<-seq(-10,10,0.1)	
+> y<-x^2
+> plot(x,y)
+> plot(x,y,type='l')
+> plot(x,y,type='l',lty=1,col='blue')
+> z<-rep(0,length(x))
+> lines(x,z,type='l',lty=2,col='red')
+> t<-seq(0,100,0.1)
+> u<-rep(0,length(t))
+> lines(u,t,type='l',lty=2,col='red')
+=====================================================Tiền xử lý dữ liệu
+phát hiện gia trị thiếu
+> is.na(x)
+[1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+> # xu lý gia tri thieu co cac phuong phap
+> #1.loai bo cac phan tu mang gia tri thieu: neu so luong cac phan tu thieu <<
+> #2. gan 1 hang so, gia tri nao do cho phan tu thieu
+> #3. neu dl thieu la dl so: thay gia tri thieu boi gia tri TB cac phan tu con lai
+> BA
+   ID    Ten CTDL CSDl TKMT
+1 123  Thanh  7.5  8.1  7.3
+2 124    Lan  8.1   NA  7.2
+3 345 Nguyet   NA  7.1  6.5
+4 567   Bich  7.2  6.8   NA
+5 678   Minh   NA  6.7  6.2
+> #1.Ham loai bo cac bang ghi mang gia tri thieu na.omit()
+> BB<-BA
+> BA<-na.omit(BA)
+> BA
+   ID   Ten CTDL CSDl TKMT
+1 123 Thanh  7.5  8.1  7.3
+> BA$CTDL[is.na(BA$CTDL)]<-5=> gan nhieu vi tri vs 1 gia tri
+> #Ham tinh grti TB mean()
+> #ham tinh grti TB cua cac tp x k thieu: mean(x,na.rm=T) neu NA thi xoa k lay
+> BA$CSDl[is.na(BA$CSDl)]<-mean(BA$CSDl,na.rm=T)
+> BA
+   ID    Ten CTDL  CSDl TKMT
+1 123  Thanh  7.5 8.100  7.3
+2 124    Lan  8.1 7.175  7.2
+3 345 Nguyet  5.0 7.100  6.5
+4 567   Bich  7.2 6.800   NA
+5 678   Minh  5.0 6.700  6.2
+> #hien thi cac dong mang gri thieu
+> BB[!complete.cases(BB),]
+   ID    Ten CTDL CSDl TKMT
+2 124    Lan  8.1   NA  7.2
+3 345 Nguyet   NA  7.1  6.5
+4 567   Bich  7.2  6.8   NA
+5 678   Minh   NA  6.7  6.2
+> #Dem so dong mang gtri thieu: nrow()
+> nrow(BB[!complete.cases(BB),])
+[1] 4
+> BB[colSums(is.na(BB))!=0]=> hien thi cac cot mang grti thieu
+  CTDL CSDl TKMT
+1  7.5  8.1  7.3
+2  8.1   NA  7.2
+3   NA  7.1  6.5
+4  7.2  6.8   NA
+5   NA  6.7  6.2
+> ncol(BB[colSums(is.na(BB))!=0]) ->dem so cot mang gtri thieu
+[1] 3
+> #hien thi cac cot mang gtri du
+> BB[colSums(is.na(BB))==0]
+   ID    Ten
+1 123  Thanh
+2 124    Lan
+3 345 Nguyet
+4 567   Bich
+5 678   Minh
+Viet cac doan chuong trinh thuc hien cac cong viec sau:
+dem so dong mang gtri thieu,dem so cot mang gia tri thieu, dem so phan tu mang gtri thieu,tìm ct chuyển dl co mien a,d vè x,y
+1.Phân phối chuẩn: X là ppc, muy: gtri TB, S: độ lệch chuẩn => khi mẫu quá lớn X thuộc [muy-3*S,muy+3*S]
+2.Trung vị: median(x) : tìm trung vị M, sau đó tính độ lệch của các pt so vs M d= |x-M|, sau đó
+tính trun vị của d: Md, r đến tính tỉ số t=d/Md, Những tp của x tương ứng vs ti>=4.5 là ngoại lệ
+> x<-c(23,56,73,54,31,12,89,760,57,58,43,42,-300,78,21,45)
+> M<-median(x)
+> M
+[1] 49.5
+> d<-abs(x-M)
+> d
+ [1]  26.5   6.5  23.5   4.5  18.5  37.5  39.5 710.5   7.5   8.5   6.5   7.5
+[13] 349.5  28.5  28.5   4.5
+> Md<-median(d)
+> t<-d/Md
+> x[which(t>=4.5)]
+[1]  760 -300
+> ol<-function(x) { => hàm tìm ngoại lệ
++ M<-median(x)
++ d<-abs(x-M)
++ Md<-median(d)
++ t<-d/Md
++ x[which(t>=4.5)]
++ }
+> ol(x)
+[1]  760 -300
+3.PP tứ phân vị: 
+> summary(x) => hàm tìm grti tứ phân vị
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-300.00   29.00   49.50   71.38   61.75  760.00 
+=> bc1: tính Q1,Q3 
+=> bc2: IQR=Q3-Q1
+> bc3.L=Q1-1.5*IQR; U=Q3+1.5*IQR
+> bc4 x<L | x>U: ngoai le
+> kq<-summary(x)
+> Q1;Q3
+1st Qu. 
+     29 
+3rd Qu. 
+  61.75 
+> IQR<-Q3-Q1 =>độ trãi
+> L<-Q1-1.5*IQR
+> U<-Q3+1.5*IQR
+> x[x<L|x>U] =>outliner
+[1]  760 -300
+TBnhaan: toc do phat trien binh quan cua nhung gtri lien hoan k co cung goc ss
+gia trị trung tầm: là trung bình cộng của 2 gtri lớn nhất và nhỏ nhất. 
+đo mức độ phân tán dữ liệu: tầm/khoảng biến thiên amax - amin
+phương sai: hàm var(x)
+độ lệch chuẩn : hàm sd() = sqrt(var(x)) bằng với căn bậc 2 của phương sai
+========================================================
+> BA
+    x  ts
+1   0  40
+2   1 100
+3   2 142
+4   3  66
+5   4  36
+6   5  30
+7   6  26
+8   7  20
+9   8  16
+10  9  14
+11 10   8
+12 11   2
+> BA$XS<-BA$ts/sum(BA$ts)=>Tần số
+> PPXS<-data.frame(BA$X,BA$XS)=> bang phan phoi xac suat
+> E<-sum(BA$X * BA$XS)
+> E => chính là số xe hy vọng bán trong 1 ngày của, kỳ vọng toán.
+[1] 0.159648
+khai báo: > Xa<- DiscreteDistribution(BA$x, BA$XS) biến ngẫu nhiên có gtri đc lưu trong BA$x, xác suất của từng gtri đc lưu trong BA$XS
+> E(Xa)=>kỳ vọng
+[1] 3.056
+> var(Xa)=>phương sai > s2<-sum((BA$x - E)^2*BA$XS) => thủ công
+[1] 6.068864
+> sd(Xa)=>độ lệch chuẩn > sd<-sqrt(s2) thủ công
+[1] 2.463506
+> K1<-sum(BA$XS[BA$x<4]) => tìm xác suất có ít hơn 4 xe đc bán
+> K2<-sum(BA$XS[BA$x>=4]) or > K3<-1-K1 => xác suất ít nhất 4 xe đc bán
+
+> 1- punif(35,20,40) punif(K,a,b) X<=K
+[1] 0.25
+> #b. ve ham ppxs cua x
+> z<-punif(x,20,40)
+> plot(x,z,type='l',lty=1,col='blue')
+Xbar là trung bình mẫu
+Muy là trung bình tổng thể
+đồng đều, sự ổn định -> kiểm định về Phương sai
+=====================================hội quy tuyến tính
+> x<-c(4,7,9,12,5,2,1)
+> y<-c(8,5,10,11,20,5,3)
+> cor(x,y)
+> cor.test(x,z)
+> cor.test(x,z,method='spearman')
+> cor.test(x,z,method='kendall')
+> lm(z~x)
+>plot(x,z)
+> reg<-lm(z~x)
+> abline(reg)
+> plot(x,y)
+> reg<-lm(y~x)
+> abline(reg)
+===========================
+cumsum() : hàm phân phối tích lũy.

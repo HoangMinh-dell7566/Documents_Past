@@ -1,0 +1,62 @@
+de1
+cau1.a
+KQ<-edit(data.frame()) ----nhap gia tri tuong ung
+cau1.b
+KQ$TH1[is.na(KQ$TH1)]<-mean(KQ$TH1,na.rm=TRUE)
+KQ$TH2[is.na(KQ$TH2)]<-mean(KQ$TH2,na.rm=TRUE)
+KQ$HT1[is.na(KQ$HT1)]<-mean(KQ$HT1,na.rm=TRUE)
+
+cau1.c
+
+barplot(data.matrix(KQ),beside=T,col=rainbow(length(KQ$TH1)))
+
+cau2.a
+NC<-edit(data.frame()) ----nhap gia tr
+ NC$DB<-(NC$cd+NC$ct)/2
+
+cau2.b
+
+Xbar<-mean(NC$DB)
+S2<-sum((NC$DB-Xbar)^2*NC$soluong)/(sum(NC$soluong)-1)
+S<-sqrt(S2)
+alpha<-0.03
+Zstar<-qnorm(1-alpha/2)
+n<-sum(NC$soluong)
+E<-Zstar*S/sqrt(n)
+Xbar-E;Xbar+E
+
+cau2.c
+x<-NC$soluong[NC$DB>195]
+Y<-sum(x)
+
+
+cau2.d
+alpha<-0.02
+Zstar<-qnorm(1-alpha/2)
+pmu<-Y/sum(NC$soluong)
+er<-Zstar*sqrt(pmu*(1-pmu)/n)
+pmu-er;pmu+er
+
+cau3.a
+#h1: mu-mu0<>0
+
+cau3.b
+#dung bien bac bo
+nA<-32
+nB<-40
+XA<-180
+XB<-170
+s2A<-14^2
+s2B<-10^2
+Z0<-(XA-XB)/sqrt(s2A/nA+s2B/nB)
+alpha<-0.05
+Zstar<-qnorm(1-alpha/2)
+Z0-Zstar>0
+#chap nhan H1
+#dung P-value
+
+p<-2*(1-pnorm(Z0))
+p;alpha
+# ta co p < alpha => bac bo H0, chap nhan H1
+
+

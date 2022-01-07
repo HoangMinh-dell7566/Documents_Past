@@ -1,0 +1,39 @@
+===============Ham xac dinh NA
+> is.NA<-function(x) {
++ if(mode(x)=='FALSE')
++ TRUE
++ else
++ FALSE}
+=======================hàm xđ số cột
+> Ncol<-function(x){
++ dem<-0
++ for(i in 1:dim(x)[1])
++ for(j in 1:dim(x)[2])
++ if(is.NA(x[i,j])){
++ Dem<-Dem+1
++ break }
++ Dem
++ }
+=======================
+%!in% <- Negate(%in%)
+DemSoCotMangGTThieu<-function(dl){
+	Dem<-0
+	bc<-c()
+	for(i in 1:dim(dl)[1])
+		for(j in 1:dim(dl)[2])
+			if(j %!in% bc)
+				if(is.na(dl[i,j])){
+					Dem <- Dem+1
+					bc<-append(bc,j)
+				}
+	Dem
+}
+========================
+DemSoPTMangGTThieu<-function(dl){
+	Dem<-0
+	for(i in 1:dim(dl)[1])
+		for(j in 1:dim(dl)[2])
+			if(is.na(dl[i,j])) Dem <- Dem+1
+			else Dem<-Dem
+	 Dem
+}

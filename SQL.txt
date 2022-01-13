@@ -1,0 +1,87 @@
+Create database Baitap
+on primary(
+	Name = Frogdata1,
+	Filename = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Frogdata1.mdf',
+	Size = 3mb,
+	Filesize = 20mb,
+	Filegrowth = 2mb
+	);
+	LOG ON (
+	Name = Froglog1,
+	Filename ='C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Froglog1.ldf'
+	Size =1mb,
+	filesize=5mb,
+	Filegrowth = auto
+	)
+use Baitap
+Alter database Baitap
+add file (
+on primary(
+	name = frogdata2, 
+	filename ='C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Frogdata2.mdf',
+	Size =3mb,
+	Filesize = 20mb,
+	Filegrowth =2mb)
+Log on(
+	Name = Froglog2,
+	Filename ='C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Froglog2.ldf'
+	Size =1mb,
+	filesize=5mb,
+	Filegrowth = auto)
+	)
+USE FROG GO
+DBCC SHRINKFILE
+FEOGLOG2,
+(
+EMPTYFILE
+)
+GO
+ALTER DATABASE FROG
+REMOVE FILE FROGLOG2
+
+
+
+CÂU 5,6.
+ USE FROG GO
+CREATE DATABASE FROG ON PRIMARY
+(
+	SIZE = 3,
+	MAXSIZE = 20,
+	FILEGROWTH = 2,
+	NAME = Frogdata1,
+),
+(
+	SIZE = 3,
+	MAXSIZE = 20,
+	FILEGROWTH = 2,
+	NAME = Frogdata2,
+)
+LOG ON
+(
+	SIZE = 1,
+	MAXSIZE = 5,
+	NAME = Froglog1,
+),
+(
+	SIZE = 1,
+	MAXSIZE = 5,
+	NAME = Froglog1,
+)
+DBCC SHRINKFILE
+FEOGLOG2,
+(
+EMPTYFILE
+)
+GO
+ALTER DATABASE FROG
+REMOVE FILE FROGLOG2
+CÂU 7.
+ALTER DATABASE FROG
+MODIFY NAME = TREELOG
+CÂU 8.
+DROP DATABASE TREELOG
+
+Go: ngắt dòng thực hiện bên trên trước sau đó thực hiện bên dưới
+Alter: dùng để sửa vd: alter database ..., alter table ...,
+drop: gỡ toàn bộ vd: drop table ..., drop databse ...,
+truncate: chỉ xóa dữ liệu bên trong ....,

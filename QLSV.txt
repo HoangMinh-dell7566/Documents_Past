@@ -1,0 +1,198 @@
+Create database QLSV 
+ON PRIMARY (
+	Name= QLSVdata1,
+	FileName = "D:\HK1-ThirdYear\HQTCSDL\QLSVdata1.MDF",
+	Size= 3mb,
+	Maxsize= 20mb,
+	filegrowth= 2mb)
+	LOG ON (
+	Name= QLSVlog1,
+	FileName =  "D:\HK1-ThirdYear\HQTCSDL\QLSVlog1.LDF",
+	Size= 1mb,
+	Maxsize= 5mb
+)
+
+use QLSV 
+Go
+ 
+create table KHOA (
+	Makhoa varchar(10)	primary key ,
+	Tenkhoa nvarchar(10),
+	SL_CBGD smallint
+)
+
+create table SINHVIEN (
+	MSSV varchar(5) primary key,
+	Ten nvarchar(50),
+	phai bit,
+	diachi nvarchar(100),
+	dienthoai varchar(20) not null,
+	Makhoa varchar(10) foreign key references KHOA(Makhoa)
+)
+
+create table GIAOVIEN (
+	MaGV varchar(5) primary key,
+	TenGV nvarchar(50),
+	Makhoa varchar(10) foreign key references KHOA(Makhoa)
+)
+
+create table MONHOC (
+	MaMH varchar(5) primary key,
+	TenMH nvarchar(50),
+	soTC int
+)
+
+create table GIANGDAY (
+	MaKhoaHoc varchar(5) primary key,
+	MaGV varchar(5) foreign key references GIAOVIEN(MaGV),
+	MaMH varchar(5) foreign key references MONHOC(MaMH),
+	Hocky smallint,
+	Nam int
+)
+
+create table KETQUA (
+	MaKhoaHoc varchar(5) foreign key references GIANGDAY(MaKhoaHoc),
+	MaSV varchar(5) foreign key references SINHVIEN(MSSV),
+
+	Diem decimal(3,1)
+)
+
+insert INTO KHOA(Makhoa,Tenkhoa,SL_CBGD)
+VALUES('CNTT',N'Công nghệ thông tin',15)
+insert INTO KHOA
+values('TOAN',N'Toán',20)
+insert INTO KHOA
+values('SINH',N'Sinh học',7)
+
+insert INTO SINHVIEN(MSSV,Ten,diachi,dienthoai,Makhoa,phainu)
+values('SV001','Bui THUY AN','223 TRA HUNG DAO.HCM',0843132202,'CNTT',1)
+
+insert INTO SINHVIEN(MSSV,Ten,diachi,dienthoai,Makhoa,phainu)
+values('SV002','NGUYEN THANH TUNG','140 CONG QUYNH.HCM',0581525678,'CNTT',0)
+insert INTO SINHVIEN(MSSV,Ten,diachi,dienthoai,Makhoa,phainu)
+values('SV003','NGUYEN THANH LONH','112/4 CONG QUYNH.HCM',0918354623,'TOAN',0)
+insert INTO SINHVIEN(MSSV,Ten,diachi,dienthoai,Makhoa,phainu)
+values('SV004','HOANG THI HOA','90 NG VAN CU.HCM',0988320123,'CNTT',1)
+insert INTO SINHVIEN(MSSV,Ten,diachi,dienthoai,Makhoa,phainu)
+values('SV005','TRAN HONG SON','54 CAO THANG.HANOI',0928355984,'CNTT',0)
+
+insert INTO GIAOVIEN
+values('GV01','PHAM THI THAO','CNTT')
+insert INTO GIAOVIEN
+values('GV02','LAM HOANG VU','TOAN')
+insert INTO GIAOVIEN
+values('GV03','TRAN VAN TIEN','CNTT')
+insert INTO GIAOVIEN
+values('GV04','HOANG VUONG','CNTT')
+
+insert INTO MONHOC
+values('CSDL','CO SO DU LIEU',3)
+insert INTO MONHOC
+values('CTDL','CAU TRUC DU LIEU',4)
+insert INTO MONHOC
+values('KTLT','KY THUAT LAP TRINH',5)
+insert INTO MONHOC
+values('CWIN','LAP TRINH C TREN WINDOW',4)
+
+insert INTO GIANGDAY
+values('K1','GV01','CSDL',1,2018)
+insert INTO GIANGDAY
+values('K2','GV02','KTLT',2,2018)
+insert INTO GIANGDAY
+values('K3','GV03','CTDL',1,2019)
+insert INTO GIANGDAY
+values('K4','GV04','CWIN',1,2019)
+insert INTO GIANGDAY
+values('K5','GV05','CSDL',1,2019)
+
+insert INTO KETQUA
+values('SV001','K1',8.5)
+insert INTO KETQUA
+values('SV002','K3',7.0)
+insert INTO KETQUA
+values('SV003','K4',7.5)
+insert INTO KETQUA
+values('SV001','K2',9.0)
+insert INTO KETQUA
+values('SV004','K3',6.0)
+insert INTO KETQUA
+values('SV005','K3',7.0)
+insert INTO KETQUA
+values('SV002','K1',7.0)
+insert INTO KETQUA
+values('SV003','K2',8.5)
+insert INTO KETQUA
+values('SV005','K4',7.0)
+insert INTO KETQUA
+values('SV004','K4',2.0)
+
+--BaitapQLSV
+--1
+SELECT Ten,diachi,dienthoai
+from SINHVIEN
+--2
+Select TenMH,soTC
+from MONHOC
+--3
+select *
+from KETQUA
+where MaSV='SV003'
+--4
+select TenMH,soTC
+from MONHOC
+where MaMH like 'C_D_'
+--5
+select TenGV
+from GIAOVIEN
+where TenGV like '%A%'
+--6
+select *
+from MONHOC
+where TenMH like '%DU%'
+--7
+select TenGV
+from GIAOVIEN
+where TenGV like 'P%' or TenGV like 'L%'
+--8
+select Ten,diachi
+from SINHVIEN
+where diachi like '%CONG QUYNH%'
+--9
+select TenMH,soTC
+from MONHOC a, GIANGDAY b
+where a.MaMH=b.MaMH and b.Nam = 2002
+--10 chua bt
+select MSSV,Ten,diachi
+from SINHVIEN a, KHOA b
+where a.Makhoa=b.Makhoa 
+order by Ten asc
+--11
+select 
+
+--12
+select d.MSSV,d.Ten,a.MaMH,a.TenMH,c.Diem
+from MONHOC a, GIANGDAY b,KETQUA c, SINHVIEN d
+where a.MaMH='CSDL' and a.MaMH=b.MaMH and b.MaKhoaHoc=c.MaKhoaHoc and c.MaSV=d.MSSV and c.Diem between 8 and 10 
+--13
+select a.Diem ,b.Ten as N'tên sinh viên'
+from KETQUA a, SINHVIEN b
+where a.MaSV= b.MSSV and b.Ten like '%TUNG'
+ --14
+ --15
+ --16
+select MSSV, Ten
+from SINHVIEN sv, KETQUA kq, GIANGDAY gd, MONHOC mh
+where (mh.MaMH = 'CSDL' or mh.MaMH = 'CTDL')  and sv.MSSV=kq.MaSV and kq.MaKhoaHoc=gd.MaKhoaHoc and gd.MaMH=mh.MaMH
+--17
+select a.MaGV,a.TenGV
+from GIAOVIEN a,GIANGDAY b, MONHOC c
+where a.MaGV=b.MaGV and b.MaMH=c.MaMH and c.TenMH='KY THUAT LAP TRINH'
+--18
+select TenMH
+from MONHOC a, GIANGDAY b, GIAOVIEN c
+where a.MaMH=b.MaMH and b.Hocky=1 and b.Nam=2019 and b.MaGV=c.MaGV and c.TenGV='TRAN VAN TIEN'
+--19
+--20
+select a.Ten, a.MSSV 
+from SINHVIEN a, KETQUA b
+where a.MSSV=b.MaSV and b.Diem >8

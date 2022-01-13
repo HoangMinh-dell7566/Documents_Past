@@ -1,0 +1,187 @@
+﻿CREATE DATABASE QLBH
+GO
+USE QLBH
+GO
+
+CREATE TABLE NHANVIEN (
+	MANV VARCHAR(4) PRIMARY KEY,
+	HOLOT NVARCHAR(30) NOT NULL,
+	TEN NVARCHAR(20) NOT NULL,
+	GIOITINH VARCHAR(5) NOT NULL
+)
+CREATE TABLE HANGHOA (
+	MAHH VARCHAR(4) PRIMARY KEY,
+	TENHH NVARCHAR(10) NOT NULL,
+	DONVITINH NVARCHAR(10) NOT NULL,
+	TENNCC NVARCHAR(20) NOT NULL,
+	SOLUONGNHAP TINYINT NOT NULL,
+	DONGIANHAP MONEY NOT NULL
+)
+
+CREATE TABLE HOADONBAN(
+	SOHD VARCHAR(6) PRIMARY KEY,
+	NGAYBAN DATE NOT NULL,
+	MANV VARCHAR(4) NOT NULL
+)
+CREATE TABLE CTHDB (
+	SOHD VARCHAR(6) NOT NULL,
+	MAHH VARCHAR(4) NOT NULL,
+	SOLUONGBAN TINYINT NOT NULL
+)
+
+ALTER TABLE CTHDB
+ADD CONSTRAINT PK_CT PRIMARY KEY (SOHD,MAHH)
+ALTER TABLE HOADONBAN
+ADD CONSTRAINT FK_NV FOREIGN KEY (MANV) REFERENCES NHANVIEN(MANV)
+ALTER TABLE CTHDB
+ADD CONSTRAINT FK_HH FOREIGN KEY (MAHH) REFERENCES HANGHOA(MAHH)
+ALTER TABLE CTHDB
+ADD CONSTRAINT FK_HD FOREIGN KEY (SOHD) REFERENCES HOADONBAN(SOHD)
+
+INSERT INTO NHANVIEN VALUES
+('NV01','PHAM MINH','HOANG','NAM'),
+('NV02','TRUONG MINH','PHI','NAM'),
+('NV03','NGUYEN KHANH','DUY','NAM'),
+('NV04','LE THIEN','MY','NU'),
+('NV05','PHAN THI','HA','NU'),
+('NV06','NGUYEN THI','NGA','NU')
+
+INSERT INTO HANGHOA VALUES
+('H001','CAM','KG','CONG TY 01',20,2000),
+('H002','XOAI','THUNG','CONG TY 02',10,2500),
+('H003','TAO','KG','CONG TY 01',30,4000),
+('H004','MIT','THUNG','CONG TY 03',25,3000),
+('H005','THANH LONG','KG','CONG TY 04',15,1000)
+
+INSERT INTO HOADONBAN VALUES 
+('HD001','2017/3/5','NV06'),
+('HD002','2021/3/5','NV01'),
+('HD003','2017/5/5','NV03'),
+('HD004','2017/9/5','NV04'),
+('HD005','2021/10/12','NV06'),
+('HD006','2021/3/6','NV06')
+
+INSERT INTO CTHDB VALUES 
+('HD001','H001',10),
+('HD002','H002',5),
+('HD003','H004',15),
+('HD005','H003',20),
+('HD004','H005',8)
+
+--CÂU 2: 
+--a.	Danh sách các hóa đơn do nhân viên có tên là “Nga” lập trong năm 2021, gồm: SốHD, ngày bán, tổng số tiền.
+SELECT HD.SOHD, HD.NGAYBAN, SUM(CT.SOLUONGBAN*HH.DONGIANHAP) AS [TỔNG TIỀN]
+FROM HOADONBAN HD JOIN NHANVIEN NV ON HD.MANV = NV.MANV
+JOIN CTHDB CT ON HD.SOHD=CT.SOHD
+JOIN HANGHOA HH ON CT.MAHH=HH.MAHH
+WHERE NV.TEN = 'NGA' AND YEAR(HD.NGAYBAN) = 2021
+GROUP BY HD.SOHD, HD.NGAYBAN
+--b.	Lập danh sách các nhân viên chưa tham gia bán hàng, gồm các thông tin: MaNV, Holot, Ten, GioiTinh.
+SELECT NV.MANV,NV.HOLOT,NV.TEN,NV.GIOITINH
+FROM NHANVIEN NV 
+WHERE NV.MANV NOT IN (SELECT HD1.MANV FROM HOADONBAN HD1)
+--c.	Tính số tiền bán ứng với mỗi mặt hàng theo từng quý trong năm 2017. 
+SELECT HH.MAHH,HH.TENHH,
+CASE DATEPART(QUARTER, HD.NGAYBAN) WHEN  1 THEN	SUM(CT.SOLUONGBAN*HH.DONGIANHAP)
+ELSE	0 END	AS [QUÝ 1],
+CASE DATEPART(QUARTER, HD.NGAYBAN) WHEN  2 THEN	SUM(CT.SOLUONGBAN*HH.DONGIANHAP)
+ELSE	0 END	AS [QUÝ 2],
+CASE DATEPART(QUARTER, HD.NGAYBAN) WHEN  3 THEN	SUM(CT.SOLUONGBAN*HH.DONGIANHAP)
+ELSE	0 END	AS [QUÝ 3],
+CASE DATEPART(QUARTER, HD.NGAYBAN) WHEN  4 THEN	SUM(CT.SOLUONGBAN*HH.DONGIANHAP)
+ELSE	0 END	AS [QUÝ 4]
+FROM HOADONBAN HD JOIN CTHDB CT ON HD.SOHD=CT.SOHD
+JOIN HANGHOA HH ON CT.MAHH=HH.MAHH
+GROUP BY HH.MAHH,HH.TENHH,HD.NGAYBAN
+--d.	Mỗi nhân viên của công ty đã lập bao nhiêu đơn bán hàng (nếu nhân viên chưa hề lập một đơn bán hàng nào thì cho kết quả là 0.
+SELECT NV.MANV,
+CASE  WHEN COUNT(NV.MANV) = 0 THEN '0' ELSE COUNT(NV.MANV) END AS [SỐ HÓA ĐƠN]
+FROM NHANVIEN NV JOIN HOADONBAN HD ON NV.MANV=HD.MANV
+GROUP BY NV.MANV
+--e.Tạo table lưu trữ tiền bán hàng cho từng hàng hóa theo ngày được nhập từ bàn phím, gồm: ngày bán, mã hàng hóa, tên hàng hóa, thành tiền. 
+CREATE PROC usp_hh
+	@MAHH VARCHAR(4)
+AS
+BEGIN
+	SELECT HD.NGAYBAN,HH.MAHH, SUM(CT.SOLUONGBAN*HH.DONGIANHAP) AS [THÀNH TIỀN]
+	FROM HANGHOA HH join CTHDB CT on HH.MaHH = CT.MAHH
+					join HOADONBAN HD on CT.SOHD = HD.SOHD
+	WHERE HH.MAHH = @MAHH
+	GROUP BY HD.NGAYBAN,HH.MAHH
+END
+--CÂU 3
+--a.Viết thủ tục thực hiện 02 công việc sau: a) Thêm một bản ghi vào trong bảng HoaDonBan (ví dụ: SoHD: HD0005, NgayBan: 24/10/2019, MaNV: NV03);
+--b) Lên danh sách ban hàng cho bảng CTHDB, trong đó số hóa đơn là HD0005 (bổ sung thêm vào bảng CTHDB các bản ghi với cột SoHD nhận giá trị HD0005, 
+--cột MAHH nhận giá trị lần lượt là các mã hàng hóa trong bảng HangHoa, các cột SoLuong và DonGiaBan là NULL).
+ALTER PROC SP_THEM_HOADON 
+	@SOHD VARCHAR(6) ,
+	@NGAYBAN DATE ,
+	@MANV VARCHAR(4)
+AS
+BEGIN
+	 DECLARE @A  VARCHAR(5)
+	 SELECT @A = MAHH FROM HANGHOA
+	INSERT INTO HOADONBAN VALUES
+	(@SOHD,@NGAYBAN,@MANV)
+	INSERT INTO CTHDB VALUES
+	(@SOHD,@A,NULL)
+END
+
+exec SP_THEM_HOADON 'HD0005','2019-10-24','NV03'
+--b.	Viết hàm hiển thị nhân viên và số lượng đơn bán hàng của từng nhân viên trong tháng 7/2021.
+ALTER FUNCTION TONGSODONBAN ()
+RETURNS @NV_SoDDH TABLE ( MaNV nvarchar(5),Ten nvarchar(10),SoLuong_DDH int)
+AS
+	RETURN (
+		SELECT NV.MANV,NV.HOLOT,NV.TEN,COUNT(HD.MANV) AS [SỐ ĐƠN BÁN]
+		FROM NHANVIEN NV JOIN HOADONBAN HD ON NV.MANV=HD.MANV
+		WHERE MONTH(HD.NGAYBAN)=7 AND YEAR(HD.NGAYBAN)=2021
+		GROUP BY NV.MANV,NV.HOLOT,NV.TEN
+	)
+
+	select *
+	from TONGSODONBAN()
+--c.	Tạo trigger tự động cập nhật số lượng nhập hàng của hàng hóa mỗi khi cập nhật cột số lượng bán của bảng CTHDB
+CREATE TRIGGER TR_CTHD_INSERT On CTHDB
+FOR UPDATE
+AS
+BEGIN 
+    DECLARE @SLD SMALLINT -- biến nhận giá trị số lượng của sự kiện xóa
+    DECLARE @SLI SMALLINT -- biến nhận giá trị số lượng của sự kiện insert (cái được hiển thị kết quả cuối cùng)
+    DECLARE @SLG SMALLINT
+    DECLARE @TONGSL SMALLINT
+    SELECT @SLG = C.SoluongNhap FROM CTHDB A, inserted B , HangHoa C WHERE A.MaHH = B.MaHH AND C.MaHH = A.MaHH
+    SELECT @SLD = A.SoLuongBan FROM deleted A, inserted B WHERE A.MaHH = B.MaHH AND A.MaHH = B.MaHH
+    SELECT @SLI = B.SoLuongBan FROM deleted A, inserted B WHERE A.MaHH = B.MaHH AND A.MaHH = B.MaHH
+    IF (@SLD < @SLI) -- KHI TĂNG SỐ LƯỢNG LÊN
+        BEGIN 
+            SET @TONGSL = @SLI - @SLD
+            IF (@TONGSL <= @SLG)
+                BEGIN
+                    UPDATE HangHoa SET HangHoa.SoluongNhap = A.SoluongNhap - (@SLI - @SLD)
+                    FROM CTHDB B, inserted C  ,HangHoa A
+                    WHERE B.MaHH = C.MaHH AND A.MaHH = B.MaHH
+                END 
+            ELSE 
+                BEGIN
+                    PRINT 'KHONG DAT DUOC, VUOT QUA SO LUONG HANG'
+                    PRINT 'SO LUONG HIEN TAI LA'
+                    PRINT @SLgoc
+                    ROLLBACK TRAN
+                END 
+        END
+    IF (@SLI < 1 )
+        BEGIN 
+            PRINT N'SỐ LƯỢNG ĐẶT HÀNG PHẢI LỚN HƠN 0'
+            ROLLBACK TRAN
+        END
+    ELSE 
+        BEGIN
+        IF (@SLD > @SLI) -- KHI GIẢM SỐ LƯỢNG
+            BEGIN 
+                UPDATE HangHoa SET HangHoa.SoluongNhap = A.SoluongNhap + (@SLD - @SLI)
+                FROM CTHDB B, inserted C  ,HangHoa A
+                WHERE B.MaHH = C.MaHH AND A.MaHH = B.MaHH
+            END
+        END
+END
